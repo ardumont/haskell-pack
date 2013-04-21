@@ -1,4 +1,7 @@
-(install-packs '(haskell-mode
+(install-packs '(;; compile on the fly
+                 flymake
+                 flymake-shell
+                 haskell-mode
                  ghci-completion
                  ;; flymake-easy
                  ;; flymake-haskell-multi
