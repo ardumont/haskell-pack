@@ -7,5 +7,5 @@ A pack to setup haskell modes.
 
 In your `.emacs-live.el` add this snippet:
 ```elisp
-(live-add-packs '("/path/to/git-pack"))
+(live-add-packs '("/path/to/haskell-pack"))
 ```
