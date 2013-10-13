@@ -30,6 +30,10 @@
 ;; Ignore compiled Haskell files in filename completions
 (add-to-list 'completion-ignored-extensions ".hi")
 
+;; adding completion
+(add-hook 'haskell-mode-hook 'turn-on-ghci-completion)
+(add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion)
+
 ;;;;;;;;;;;;;;;;;;;;; load the general bindings
 
 (defun flymake-haskell-init ()
