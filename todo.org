@@ -1,0 +1,29 @@
+#+title: Wish/todo list
+#+author: Antoine R. Dumont
+
+* TODO Improve Switch buffer policy
+
+** Actual state of buffers
+
+|------------------------+---|
+| production code buffer | R |
+|                        | E |
+|------------------------|   |
+| tests code buffer      | P |
+|                        | L |
+|------------------------+---|
+
+** Bindings
+
+|---------+---------------------------------------------------+--------+------------------------------------------|
+| Binding | Description                                       | Status | Wish                                     |
+|---------+---------------------------------------------------+--------+------------------------------------------|
+| C-c C-z | switch from tests/production buffer to repl       | OK     | X                                        |
+| C-c C-l | Compile the tests/production code                 | OK     | X                                        |
+| C-x o   | when in repl, get back to tests/production buffer | BAD    | As in nrepl/clojure-mode buffer, use the |
+|         |                                                   |        | the same binding C-c C-z to get back     |
+|         |                                                   |        | to the buffer I'm coming from            |
+|---------+---------------------------------------------------+--------+------------------------------------------|
+
+* TODO Improve completion
+* TODO Run tests when saving production/tests buffer
