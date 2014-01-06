@@ -22,19 +22,18 @@
 
 ;;;;;;;;;;;;;;;;;;;;; haskell
 
-(add-hook 'haskell-mode-hook 'turn-on-haskell-doc-mode)
+(eval-after-load 'haskell-mode
+  '(progn
+     (defun haskell-pack-haskell-mode-defaults ()
+       (subword-mode +1)
+       (turn-on-haskell-doc-mode)
+       (turn-on-haskell-indentation)
+       (turn-on-ghci-completion)
+       ;; Ignore compiled Haskell files in filename completions
+       (add-to-list 'completion-ignored-extensions ".hi"))
 
-;; hslint on the command line only likes this indentation mode;
-;; alternatives commented out below.
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-;;(add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+     (add-hook 'haskell-mode-hook 'haskell-pack-haskell-mode-defaults)))
 
-;; Ignore compiled Haskell files in filename completions
-(add-to-list 'completion-ignored-extensions ".hi")
-
-;; adding completion
-(add-hook 'inferior-haskell-mode-hook 'turn-on-ghci-completion)
 
 ;;;;;;;;;;;;;;;;;;;;; load the general bindings
 
