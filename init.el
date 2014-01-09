@@ -22,18 +22,15 @@
 
 ;;;;;;;;;;;;;;;;;;;;; haskell
 
-(eval-after-load 'haskell-mode
-  '(progn
-     (defun haskell-pack-haskell-mode-defaults ()
-       (subword-mode +1)
-       (turn-on-haskell-doc-mode)
-       (turn-on-haskell-indentation)
-       (turn-on-ghci-completion)
-       ;; Ignore compiled Haskell files in filename completions
-       (add-to-list 'completion-ignored-extensions ".hi"))
+(defun haskell-pack-mode-defaults ()
+  (subword-mode +1)
+  (turn-on-haskell-doc-mode)
+  (turn-on-haskell-indentation)
+  (turn-on-ghci-completion)
+  ;; Ignore compiled Haskell files in filename completions
+  (add-to-list 'completion-ignored-extensions ".hi"))
 
-     (add-hook 'haskell-mode-hook 'haskell-pack-haskell-mode-defaults)))
-
+(add-hook 'haskell-mode-hook 'haskell-pack-mode-defaults)
 
 ;;;;;;;;;;;;;;;;;;;;; load the general bindings
 
