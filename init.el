@@ -17,8 +17,8 @@
 ;; (require 'flymake-hlint)
 ;; (add-hook 'haskell-mode-hook 'flymake-hlint-load)
 
-(load-file "lib/hs-lint.el")
-(load-file "lib/ac-haskell.el")
+(live-add-pack-lib "hs-lint.el")
+(live-add-pack-lib "ac-haskell.el")
 (require 'hs-lint)    ;; https://gist.github.com/1241059
 (require 'haskell-ac) ;; https://gist.github.com/1241063
 
