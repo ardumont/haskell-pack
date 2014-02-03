@@ -17,8 +17,10 @@
 ;; (require 'flymake-hlint)
 ;; (add-hook 'haskell-mode-hook 'flymake-hlint-load)
 
-(live-add-pack-lib "hs-lint.el")
-(live-add-pack-lib "ac-haskell.el")
+(load-file "lib/hs-lint.el")
+(load-file "lib/ac-haskell.el")
+(require 'hs-lint)    ;; https://gist.github.com/1241059
+(require 'haskell-ac) ;; https://gist.github.com/1241063
 
 ;;;;;;;;;;;;;;;;;;;;; haskell
 
@@ -61,9 +63,6 @@
 (custom-set-faces
  '(flymake-errline ((((class color)) (:underline "red"))))
  '(flymake-warnline ((((class color)) (:underline "yellow")))))
-
-(require 'hs-lint)    ;; https://gist.github.com/1241059
-(require 'haskell-ac) ;; https://gist.github.com/1241063
 
 ;; (defun my-haskell-mode-hook ()
 ;;   "hs-lint binding, plus autocompletion and paredit."
