@@ -118,3 +118,5 @@ haskell buffer and the REPL buffer."
 
 ;; on inf-haskell, C-c C-z is on comint-stop-subjob
 (define-key inferior-haskell-mode-map (kbd "C-c C-z") 'haskell-pack-switch-to-last-haskell-buffer)
+
+(define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)
