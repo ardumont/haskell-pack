@@ -120,3 +120,4 @@ haskell buffer and the REPL buffer."
 (define-key inferior-haskell-mode-map (kbd "C-c C-z") 'haskell-pack-switch-to-last-haskell-buffer)
 
 (define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)
+(define-key haskell-interactive-mode-map (kbd "C-j") 'haskell-interactive-mode-return)
