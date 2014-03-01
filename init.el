@@ -1,3 +1,9 @@
+;;; haskell-pack.el --- Haskell configuration
+
+;;; Commentary:
+
+;;; Code:
+
 (install-packs '(;; compile on the fly
                  flymake
                  flymake-shell
@@ -123,3 +129,5 @@ haskell buffer and the REPL buffer."
 
 (when (require 'haskell-interactive nil 'noerror)
       (define-key haskell-interactive-mode-map (kbd "C-j") 'haskell-interactive-mode-return))
+
+;;; haskell-pack.el ends here
