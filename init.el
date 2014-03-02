@@ -127,6 +127,11 @@ haskell buffer and the REPL buffer."
 
 (define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)
 
+(add-hook 'inferior-haskell-mode-hook
+          (lambda ()
+            ;; deactivate smartscan if need be
+            (and (fboundp 'smartscan-mode) smartscan-mode (smartscan-mode -1))))
+
 (when (require 'haskell-interactive nil 'noerror)
       (define-key haskell-interactive-mode-map (kbd "C-j") 'haskell-interactive-mode-return))
 
