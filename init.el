@@ -119,18 +119,20 @@ haskell buffer and the REPL buffer."
     (when (and (eq major-mode HASKELL-PACK-REPL-MODE) (buffer-live-p last-haskell-pack))
           (pop-to-buffer last-haskell-pack))))
 
-;; on haskell-mode, C-c C-z is switch-to-haskell
-(define-key haskell-mode-map (kbd "C-c C-z") 'haskell-pack-switch-to-relevant-repl-buffer)
+;; hook
 
-;; on inf-haskell, C-c C-z is on comint-stop-subjob
-(define-key inferior-haskell-mode-map (kbd "C-c C-z") 'haskell-pack-switch-to-last-haskell-buffer)
-
-(define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)
+(add-hook 'haskell-mode-hook
+          (lambda ()
+            ;; on haskell-mode, C-c C-z is switch-to-haskell
+            (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-pack-switch-to-relevant-repl-buffer)))
 
 (add-hook 'inferior-haskell-mode-hook
           (lambda ()
-            ;; deactivate smartscan if need be
-            (and (fboundp 'smartscan-mode) smartscan-mode (smartscan-mode -1))))
+            ;; deactivate smartscan (M-n/M-p from this mode prevents normal use) if need be
+            (and (fboundp 'smartscan-mode) smartscan-mode (smartscan-mode -1))
+            ;; on inf-haskell, C-c C-z is on comint-stop-subjob
+            (define-key inferior-haskell-mode-map (kbd "C-c C-z") 'haskell-pack-switch-to-last-haskell-buffer)
+            (define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)))
 
 (when (require 'haskell-interactive nil 'noerror)
       (define-key haskell-interactive-mode-map (kbd "C-j") 'haskell-interactive-mode-return))
