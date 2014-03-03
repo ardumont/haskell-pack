@@ -12,7 +12,11 @@
                  ;; flymake-easy
                  ;; flymake-haskell-multi
                  ;; flymake-hlint
-                 ))
+                 smartscan-mode))
+
+(require 'smartscan-mode)
+(add-to-list 'auto-mode-alist '("\.hs$" . smartscan-mode))
+(add-to-list 'auto-mode-alist '("\.lhs$" . smartscan-mode))
 
 (require 'haskell-mode)
 (require 'inf-haskell)
