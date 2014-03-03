@@ -12,11 +12,7 @@
                  ;; flymake-easy
                  ;; flymake-haskell-multi
                  ;; flymake-hlint
-                 smartscan-mode))
-
-(require 'smartscan-mode)
-(add-to-list 'auto-mode-alist '("\.hs$" . smartscan-mode))
-(add-to-list 'auto-mode-alist '("\.lhs$" . smartscan-mode))
+                 smartscan))
 
 (require 'haskell-mode)
 (require 'inf-haskell)
@@ -132,13 +128,14 @@ haskell buffer and the REPL buffer."
 
 (add-hook 'inferior-haskell-mode-hook
           (lambda ()
-            ;; deactivate smartscan (M-n/M-p from this mode prevents normal use) if need be
-            (and (fboundp 'smartscan-mode) smartscan-mode (smartscan-mode -1))
             ;; on inf-haskell, C-c C-z is on comint-stop-subjob
             (define-key inferior-haskell-mode-map (kbd "C-c C-z") 'haskell-pack-switch-to-last-haskell-buffer)
             (define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)))
 
 (when (require 'haskell-interactive nil 'noerror)
       (define-key haskell-interactive-mode-map (kbd "C-j") 'haskell-interactive-mode-return))
+
+(require 'smartscan)
+(add-hook 'haskell-mode-hook (lambda () (smartscan-mode)))
 
 ;;; haskell-pack.el ends here
