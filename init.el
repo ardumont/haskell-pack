@@ -12,7 +12,8 @@
                  ;; flymake-easy
                  ;; flymake-haskell-multi
                  ;; flymake-hlint
-                 smartscan))
+                 smartscan
+                 shm))
 
 (require 'haskell-mode)
 (require 'inf-haskell)
@@ -33,7 +34,6 @@
 (defun haskell-pack-mode-defaults ()
   (subword-mode +1)
   (turn-on-haskell-doc-mode)
-  (turn-on-haskell-indentation)
   (turn-on-ghci-completion)
   ;; Ignore compiled Haskell files in filename completions
   (add-to-list 'completion-ignored-extensions ".hi"))
@@ -137,5 +137,9 @@ haskell buffer and the REPL buffer."
 
 (require 'smartscan)
 (add-hook 'haskell-mode-hook (lambda () (smartscan-mode)))
+
+(require 'shm)
+(add-hook 'haskell-mode-hook 'structured-haskell-mode)
+
 
 ;;; haskell-pack.el ends here
