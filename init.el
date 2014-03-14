@@ -12,8 +12,7 @@
                  ;; flymake-easy
                  ;; flymake-haskell-multi
                  ;; flymake-hlint
-                 smartscan
-                 shm))
+                 smartscan))
 
 (require 'haskell-mode)
 (require 'inf-haskell)
@@ -137,9 +136,5 @@ haskell buffer and the REPL buffer."
 
 (require 'smartscan)
 (add-hook 'haskell-mode-hook (lambda () (smartscan-mode)))
-
-(require 'shm)
-(add-hook 'haskell-mode-hook 'structured-haskell-mode)
-
 
 ;;; haskell-pack.el ends here
