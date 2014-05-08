@@ -4,6 +4,7 @@
 
 ;;; Code:
 
+(require 'install-packages-pack)
 (install-packs '(;; compile on the fly
                  flymake
                  flymake-shell
@@ -137,4 +138,5 @@ haskell buffer and the REPL buffer."
 (require 'smartscan)
 (add-hook 'haskell-mode-hook (lambda () (smartscan-mode)))
 
+(provide 'haskell-pack)
 ;;; haskell-pack.el ends here
