@@ -117,7 +117,7 @@ haskell buffer and the REPL buffer."
          (last-haskell-pack (gethash cbuf HASKELL-PACK-LAST-HASKELL-BUFFER)))
     (message "Trying to switch from %s to %s" (buffer-name cbuf) last-haskell-pack)
     (when (and (eq major-mode HASKELL-PACK-REPL-MODE) (buffer-live-p last-haskell-pack))
-          (pop-to-buffer last-haskell-pack))))
+      (pop-to-buffer last-haskell-pack))))
 
 ;; hook
 
@@ -133,7 +133,7 @@ haskell buffer and the REPL buffer."
             (define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)))
 
 (when (require 'haskell-interactive nil 'noerror)
-      (define-key haskell-interactive-mode-map (kbd "C-j") 'haskell-interactive-mode-return))
+  (define-key haskell-interactive-mode-map (kbd "C-j") 'haskell-interactive-mode-return))
 
 (require 'smartscan)
 (add-hook 'haskell-mode-hook (lambda () (smartscan-mode)))
