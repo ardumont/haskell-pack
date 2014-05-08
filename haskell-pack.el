@@ -5,29 +5,18 @@
 ;;; Code:
 
 (require 'install-packages-pack)
-(install-packs '(;; compile on the fly
-                 flymake
+(install-packs '(flymake
                  flymake-shell
                  haskell-mode
                  ghci-completion
-                 ;; flymake-easy
-                 ;; flymake-haskell-multi
-                 ;; flymake-hlint
+                 flymake-hlint
                  smartscan))
 
 (require 'haskell-mode)
 (require 'inf-haskell)
 
-;; (require 'flymake-haskell-multi)
-;; (add-hook 'haskell-mode-hook 'flymake-haskell-multi-load)
-
-;; (require 'flymake-hlint)
-;; (add-hook 'haskell-mode-hook 'flymake-hlint-load)
-
-(live-add-pack-lib "hs-lint.el")
-(live-add-pack-lib "ac-haskell.el")
-(require 'hs-lint)    ;; https://gist.github.com/1241059
-(require 'haskell-ac) ;; https://gist.github.com/1241063
+(require 'flymake-hlint)
+(add-hook 'haskell-mode-hook 'flymake-hlint-load)
 
 ;;;;;;;;;;;;;;;;;;;;; haskell
 
