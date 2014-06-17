@@ -127,5 +127,7 @@ haskell buffer and the REPL buffer."
 (require 'smartscan)
 (add-hook 'haskell-mode-hook (lambda () (smartscan-mode)))
 
+(setq haskell-tags-on-save t)
+
 (provide 'haskell-pack)
 ;;; haskell-pack.el ends here
