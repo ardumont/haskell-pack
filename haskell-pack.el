@@ -15,8 +15,13 @@
 (require 'haskell-mode)
 (require 'inf-haskell)
 
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+
 (require 'flymake-hlint)
 (add-hook 'haskell-mode-hook 'flymake-hlint-load)
+(add-hook 'haskell-mode-hook (lambda () (interactive) (inf-haskell-mode 1)))
 
 ;;;;;;;;;;;;;;;;;;;;; haskell
 
