@@ -36,27 +36,27 @@
 
 ;;;;;;;;;;;;;;;;;;;;; load the general bindings
 
-(defun flymake-haskell-init ()
-  "When flymake triggers, generates a tempfile containing the
-  contents of the current buffer, runs `hslint` on it, and
-  deletes file. Put this file path (and run `chmod a+x hslint`)
-  to enable hslint: https://gist.github.com/1241073"
-  (let* ((temp-file   (flymake-init-create-temp-buffer-copy
-                       'flymake-create-temp-inplace))
-         (local-file  (file-relative-name
-                       temp-file
-                       (file-name-directory buffer-file-name))))
-    (list "hslint" (list local-file))))
+;; (defun flymake-haskell-init ()
+;;   "When flymake triggers, generates a tempfile containing the
+;;   contents of the current buffer, runs `hslint` on it, and
+;;   deletes file. Put this file path (and run `chmod a+x hslint`)
+;;   to enable hslint: https://gist.github.com/1241073"
+;;   (let* ((temp-file   (flymake-init-create-temp-buffer-copy
+;;                        'flymake-create-temp-inplace))
+;;          (local-file  (file-relative-name
+;;                        temp-file
+;;                        (file-name-directory buffer-file-name))))
+;;     (list "hslint" (list local-file))))
 
-(defun flymake-haskell-enable ()
-  "Enables flymake-mode for haskell, and sets <C-c d> as command
-  to show current error."
-  (when (and buffer-file-name
-             (file-writable-p
-              (file-name-directory buffer-file-name))
-             (file-writable-p buffer-file-name))
-    (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
-    (flymake-mode t)))
+;; (defun flymake-haskell-enable ()
+;;   "Enables flymake-mode for haskell, and sets <C-c d> as command
+;;   to show current error."
+;;   (when (and buffer-file-name
+;;              (file-writable-p
+;;               (file-name-directory buffer-file-name))
+;;              (file-writable-p buffer-file-name))
+;;     (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+;;     (flymake-mode t)))
 
 ;; Forces flymake to underline bad lines, instead of fully
 ;; highlighting them; remove this if you prefer full highlighting.
@@ -79,13 +79,13 @@
 ;;                      "-mode-hook"))
 ;;      'turn-on-paredit)))
 
-(eval-after-load 'haskell-mode
-  '(progn
-     (require 'flymake)
-     (push '("\\.l?hs\\'" flymake-haskell-init) flymake-allowed-file-name-masks)
-     (add-hook 'haskell-mode-hook 'flymake-haskell-enable)
-     ;; (add-hook 'haskell-mode-hook 'my-haskell-mode-hook))
-     ))
+;; (eval-after-load 'haskell-mode
+;;   '(progn
+;;      (require 'flymake)
+;;      (push '("\\.l?hs\\'" flymake-haskell-init) flymake-allowed-file-name-masks)
+;;      (add-hook 'haskell-mode-hook 'flymake-haskell-enable)
+;;      ;; (add-hook 'haskell-mode-hook 'my-haskell-mode-hook))
+;;      ))
 
 ;; ######### HELP IN SWITCHING BETWEEN BUFFERS
 
@@ -126,8 +126,8 @@ haskell buffer and the REPL buffer."
             (define-key inferior-haskell-mode-map (kbd "C-c C-z") 'haskell-pack-switch-to-last-haskell-buffer)
             (define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)))
 
-(when (require 'haskell-interactive nil 'noerror)
-  (define-key haskell-interactive-mode-map (kbd "C-j") 'haskell-interactive-mode-return))
+;; (when (require 'haskell-interactive nil 'noerror)
+;;   (define-key haskell-interactive-mode-map (kbd "C-j") 'haskell-interactive-mode-return))
 
 (require 'smartscan)
 (add-hook 'haskell-mode-hook (lambda () (smartscan-mode)))
