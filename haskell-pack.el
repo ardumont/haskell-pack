@@ -52,9 +52,8 @@
   "Select the repl buffer, when possible in an existing window.
 The buffer chosen is based on the file open in the current buffer."
   (interactive)
-  (let ((current-buf         (current-buffer)) ;; current-buffer-name from which we switch to
-        (haskell-repl-buffer (switch-to-haskell)))
-    (puthash haskell-repl-buffer current-buf HASKELL-PACK/LAST-HASKELL-BUFFER)))
+  (puthash (switch-to-haskell) (current-buffer) HASKELL-PACK/LAST-HASKELL-BUFFER)
+  HASKELL-PACK/LAST-HASKELL-BUFFER)
 
 (defun haskell-pack/switch-to-last-haskell-buffer ()
   "Switch to the last haskell buffer.
@@ -63,20 +62,20 @@ the same as `haskell-pack/switch-to-relevant-repl-buffer',
 so that it is very convenient to jump between a
 haskell buffer and the REPL buffer."
   (interactive)
-  (let* ((cbuf (current-buffer))
-         (last-haskell-pack (gethash cbuf HASKELL-PACK/LAST-HASKELL-BUFFER)))
-    (message "Trying to switch from %s to %s" (buffer-name cbuf) last-haskell-pack)
-    (when (and (eq major-mode HASKELL-PACK/REPL-MODE) (buffer-live-p last-haskell-pack))
-      (pop-to-buffer last-haskell-pack))))
+  (let* ((key-haskell-repl (current-buffer))
+         (last-buffer      (gethash key-haskell-repl HASKELL-PACK/LAST-HASKELL-BUFFER)))
+    (message "Switch back from %s to %s" key-haskell-repl last-buffer)
+    (when (and (eq major-mode HASKELL-PACK/REPL-MODE) (buffer-live-p last-buffer))
+      (pop-to-buffer last-buffer))))
 
 ;; hook
 
-(add-hook 'haskell-mode-hook
+(add-hook 'inf-haskell-mode-hook ;; inferior haskell in haskell buffer
           (lambda ()
-            ;; on haskell-mode, C-c C-z is switch-to-haskell
-            (define-key haskell-mode-map (kbd "C-c C-z") 'haskell-pack/switch-to-relevant-repl-buffer)))
+            ;; on inf-haskell-mode (minor mode for haskell buffer designed for interaction with repl), C-c C-z is switch-to-haskell, we override this
+            (define-key inf-haskell-mode-map (kbd "C-c C-z") 'haskell-pack/switch-to-relevant-repl-buffer)))
 
-(add-hook 'inferior-haskell-mode-hook
+(add-hook 'inferior-haskell-mode-hook ;; inferior-haskell-mode in repl
           (lambda ()
             ;; on inf-haskell, C-c C-z is on comint-stop-subjob
             (define-key inferior-haskell-mode-map (kbd "C-c C-z") 'haskell-pack/switch-to-last-haskell-buffer)
