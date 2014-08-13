@@ -38,10 +38,10 @@
 (add-hook 'haskell-mode-hook 'haskell-pack/mode-defaults)
 
 ;; Forces flymake to underline bad lines, instead of fully
-;; highlighting them; remove this if you prefer full highlighting.
-;; (custom-set-faces
-;;  '(flymake-errline ((((class color)) (:underline "red"))))
-;;  '(flymake-warnline ((((class color)) (:underline "yellow")))))
+;; highlighting them;
+(custom-set-faces
+ '(flymake-errline ((((class color)) (:underline "red"))))
+ '(flymake-warnline ((((class color)) (:underline "yellow")))))
 
 ;; ######### HELP IN SWITCHING BETWEEN BUFFERS
 
