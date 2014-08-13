@@ -52,7 +52,8 @@
   "Select the repl buffer, when possible in an existing window.
 The buffer chosen is based on the file open in the current buffer."
   (interactive)
-  (puthash (switch-to-haskell) (current-buffer) HASKELL-PACK/LAST-HASKELL-BUFFER)
+  (let ((cbuf (current-buffer)))
+    (puthash (switch-to-haskell) cbuf HASKELL-PACK/LAST-HASKELL-BUFFER))
   HASKELL-PACK/LAST-HASKELL-BUFFER)
 
 (defun haskell-pack/switch-to-last-haskell-buffer ()
