@@ -4,21 +4,6 @@
 
 ;;; Code:
 
-;; utilities
-
-(defun haskell-pack/cabal-installed-p! ()
-  "Determine if cabal is installed or not."
-  (haskell-pack/command-installed-p! "cabal"))
-
-(defun haskell-pack/command-installed-p! (package)
-  "Determine if PACKAGE is installed on the machine"
-  (zerop (shell-command (format "which %s" package))))
-
-(defun haskell-pack/cabal-install (package)
-  "Install PACKAGE through cabal."
-  (when (haskell-pack/cabal-installed-p!);; cabal may be not installed
-    (shell-command (format "cabal install %s" package))))
-
 ;; haskell-pack
 
 (require 'install-packages-pack)
@@ -29,11 +14,33 @@
                  flymake-hlint
                  smartscan
                  w3m
-                 shm))
+                 shm
+                 deferred))
 
 (require 'flymake)
 (require 'haskell-mode)
 (require 'inf-haskell)
+(require 'deferred)
+
+;; utilities
+
+(defun haskell-pack/cabal-installed-p! ()
+  "Determine if cabal is installed or not."
+  (haskell-pack/command-installed-p! "cabal"))
+
+(defun haskell-pack/command-installed-p! (package)
+  "Determine if PACKAGE is installed on the machine"
+  (zerop (shell-command (format "which %s" package))))
+
+(defmacro haskell-pack/cabal-install (package)
+  "Install PACKAGE (if not already installed) through cabal (if cabal is installed)."
+  `(when ,(haskell-pack/cabal-installed-p!)
+     (unless (haskell-pack/command-installed-p! ,package)
+       (deferred:$
+         (deferred:process "cabal" "install" ,package)
+         (deferred:nextc it
+           (lambda (x)
+             (message "Package '%s'%s installed!" ,package ,(if (haskell-pack/command-installed-p! package) "" " still not"))))))))
 
 ;; structured-haskell-mode setup
 
@@ -41,8 +48,7 @@
 (add-hook 'haskell-mode-hook 'structured-haskell-mode)
 
 ;; install haskell-mode is not already installed
-(unless (haskell-pack/command-installed-p! "structured-haskell-mode")
-  (haskell-pack/cabal-install "structured-haskell-mode"))
+(haskell-pack/cabal-install "structured-haskell-mode")
 
 ;; turn-on-haskell-* are not compatible with structured-haskell-mode (shm)
 ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
