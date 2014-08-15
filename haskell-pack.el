@@ -11,15 +11,32 @@
                  ghci-completion
                  flymake-hlint
                  smartscan
-                 w3m))
+                 w3m
+                 shm))
 
 (require 'flymake)
 (require 'haskell-mode)
 (require 'inf-haskell)
 
+;; structured-haskell-mode setup
+
+(require 'shm)
+(add-hook 'haskell-mode-hook 'structured-haskell-mode)
+
+;; install haskell-mode is not already installed
+(unless (not (zerop (shell-command "which structured-haskell-mode")))
+  (shell-command "cabal install structured-haskell-mode"))
+
+;; turn-on-haskell-* are not compatible with structured-haskell-mode (shm)
 ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
 ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-(add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+
+;; trying out the default font color for the moment
+;; (set-face-background 'shm-current-face "#eee8d5")
+;; (set-face-background 'shm-quarantine-face "lemonchiffon")
+
+;; compilation on the fly setup
 
 (require 'flymake-hlint)
 (add-hook 'haskell-mode-hook 'flymake-hlint-load)
