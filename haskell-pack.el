@@ -62,11 +62,11 @@
   "Add some more bindings for the structured-haskell-mode-map."
   (interactive)
   ;; buffer map
-  (define-key shm-map (kbd "C-i") 'shm/tab)
+  (define-key shm-map (kbd "C-i")   'shm/tab)
   (define-key shm-map (kbd "C-M-i") 'shm/backtab)
-  (define-key shm-map (kbd "C-m") 'shm/simple-indent-newline-same-col)
+  (define-key shm-map (kbd "C-m")   'shm/simple-indent-newline-same-col)
   (define-key shm-map (kbd "C-M-m") 'shm/simple-indent-newline-indent)
-  (define-key shm-map (kbd "C-h") 'shm/del)
+  (define-key shm-map (kbd "C-h")   'shm/del)
   (define-key shm-map (kbd "C-S-h") 'shm/delete)
   (define-key shm-map (kbd "C-M-h") 'shm/backward-kill-word))
 
