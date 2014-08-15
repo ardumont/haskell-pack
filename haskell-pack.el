@@ -25,22 +25,21 @@
 ;; utilities
 
 (defun haskell-pack/cabal-installed-p! ()
-  "Determine if cabal is installed or not."
+  "Determine if cabal is installed on the machine or not."
   (haskell-pack/command-installed-p! "cabal"))
 
 (defun haskell-pack/command-installed-p! (package)
-  "Determine if PACKAGE is installed on the machine"
+  "Determine if PACKAGE is installed on the machine."
   (zerop (shell-command (format "which %s" package))))
 
 (defmacro haskell-pack/cabal-install (package)
   "Install PACKAGE (if not already installed) through cabal (if cabal is installed)."
-  `(when ,(haskell-pack/cabal-installed-p!)
-     (unless (haskell-pack/command-installed-p! ,package)
-       (deferred:$
-         (deferred:process "cabal" "install" ,package)
-         (deferred:nextc it
-           (lambda (x)
-             (message "Package '%s'%s installed!" ,package ,(if (haskell-pack/command-installed-p! package) "" " still not"))))))))
+  `(when (and ,(haskell-pack/cabal-installed-p!) (not (haskell-pack/command-installed-p! ,package)))
+     (deferred:$
+       (deferred:process "cabal" "install" ,package)
+       (deferred:nextc it
+         (lambda (x)
+           (message "Package '%s'%s installed!" ,package (if (haskell-pack/command-installed-p! ,package) "" " still not")))))))
 
 ;; structured-haskell-mode setup
 
