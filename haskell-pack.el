@@ -76,6 +76,8 @@
 
 (add-hook 'structured-haskell-mode-hook 'haskell-pack/structured-haskell-bindings)
 
+(add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
+
 ;; compilation on the fly setup
 
 (require 'flymake-hlint)
