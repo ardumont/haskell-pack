@@ -108,38 +108,6 @@
 (require 'smartscan)
 (add-hook 'haskell-mode-hook (lambda () (smartscan-mode)))
 
-;; ######### switching between buffers with universal bindings C-c C-z
-
-(defvar *HASKELL-PACK/LAST-HASKELL-BUFFER* (make-hash-table :test 'equal))
-(defvar *HASKELL-PACK/MAJOR-MODE-BUFFER*   'haskell-mode)
-(defvar *HASKELL-PACK/MAJOR-MODE-REPL*     'haskell-interactive-mode)
-
-(defun haskell-pack/switch-to-relevant-repl-buffer! ()
-  "Select the repl buffer, when possible in an existing window.
-The buffer chosen is based on the file open in the current buffer."
-  (let ((cbuf (current-buffer)))
-    (puthash (haskell-interactive-switch) cbuf *HASKELL-PACK/LAST-HASKELL-BUFFER*))
-  *HASKELL-PACK/LAST-HASKELL-BUFFER*)
-
-(defun haskell-pack/switch-to-last-haskell-buffer! ()
-  "Switch to the last haskell buffer.
-The default keybinding for this command is
-the same as `haskell-pack/switch-to-relevant-repl-buffer',
-so that it is very convenient to jump between a
-haskell buffer and the REPL buffer."
-  (let* ((key-haskell-repl (current-buffer))
-         (last-buffer      (gethash key-haskell-repl *HASKELL-PACK/LAST-HASKELL-BUFFER*)))
-    (when (and (eq major-mode *HASKELL-PACK/MAJOR-MODE-REPL*) (buffer-live-p last-buffer))
-      (message "Switch back from %s to %s" key-haskell-repl last-buffer)
-      (pop-to-buffer last-buffer))))
-
-(defun haskell-pack/swich-to-haskell-repl-or-back! ()
-  "If inside an haskell buffer, jump to the repl.
-Otherwise, jump back to the latest haskell buffer from whence it came from."
-  (interactive)
-  (funcall (cond ((eq major-mode *HASKELL-PACK/MAJOR-MODE-BUFFER*) 'haskell-pack/switch-to-relevant-repl-buffer!)
-                 ((eq major-mode *HASKELL-PACK/MAJOR-MODE-REPL*)   'haskell-pack/switch-to-last-haskell-buffer!))))
-
 ;; Main mode
 
 ;; interactive-haskell-mode is the mode! (inferior-haskell is deprecated)
@@ -149,18 +117,6 @@ Otherwise, jump back to the latest haskell buffer from whence it came from."
  '(haskell-process-suggest-remove-import-lines t)
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t))
-
-(add-hook 'interactive-haskell-mode-hook ;; haskell buffer mode
-          (lambda ()
-            ;; From the haskell buffer, go inside a repl
-            (define-key interactive-haskell-mode-map (kbd "C-c C-z") 'haskell-pack/swich-to-haskell-repl-or-back!)
-            (define-key interactive-haskell-mode-map (kbd "C-c C-b") 'haskell-pack/swich-to-haskell-repl-or-back!)))
-
-(add-hook 'haskell-interactive-mode-hook ;; repl mode
-          (lambda ()
-            ;; From the repl, get back to the last haskell buffer
-            (define-key haskell-interactive-mode-map (kbd "C-c C-z") 'haskell-pack/swich-to-haskell-repl-or-back!)
-            (define-key haskell-interactive-mode-map (kbd "C-c C-b") 'haskell-pack/swich-to-haskell-repl-or-back!)))
 
 ;; hasktags
 
