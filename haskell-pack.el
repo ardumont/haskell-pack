@@ -4,6 +4,23 @@
 
 ;;; Code:
 
+;; utilities
+
+(defun haskell-pack/cabal-installed-p! ()
+  "Determine if cabal is installed or not."
+  (haskell-pack/command-installed-p! "cabal"))
+
+(defun haskell-pack/command-installed-p! (package)
+  "Determine if PACKAGE is installed on the machine"
+  (zerop (shell-command (format "which %s" package))))
+
+(defun haskell-pack/cabal-install (package)
+  "Install PACKAGE through cabal."
+  (when (haskell-pack/cabal-installed-p!);; cabal may be not installed
+    (shell-command (format "cabal install %s" package))))
+
+;; haskell-pack
+
 (require 'install-packages-pack)
 (install-packs '(flymake
                  flymake-shell
@@ -24,8 +41,8 @@
 (add-hook 'haskell-mode-hook 'structured-haskell-mode)
 
 ;; install haskell-mode is not already installed
-(unless (not (zerop (shell-command "which structured-haskell-mode")))
-  (shell-command "cabal install structured-haskell-mode"))
+(unless (haskell-pack/command-installed-p! "structured-haskell-mode")
+  (haskell-pack/cabal-install "structured-haskell-mode"))
 
 ;; turn-on-haskell-* are not compatible with structured-haskell-mode (shm)
 ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
