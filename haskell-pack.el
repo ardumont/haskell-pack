@@ -46,7 +46,7 @@
 (require 'shm)
 (add-hook 'haskell-mode-hook 'structured-haskell-mode)
 
-;; install haskell-mode is not already installed
+;; Install needed structured-haskell-mode if not already installed
 (haskell-pack/cabal-install "structured-haskell-mode")
 
 ;; turn-on-haskell-* are not compatible with structured-haskell-mode (shm)
