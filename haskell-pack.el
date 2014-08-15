@@ -108,8 +108,6 @@
 (require 'smartscan)
 (add-hook 'haskell-mode-hook (lambda () (smartscan-mode)))
 
-(setq haskell-tags-on-save t)
-
 ;; ######### switching between buffers with universal bindings C-c C-z
 
 (defvar *HASKELL-PACK/LAST-HASKELL-BUFFER* (make-hash-table :test 'equal))
@@ -163,6 +161,13 @@ Otherwise, jump back to the latest haskell buffer from whence it came from."
             ;; From the repl, get back to the last haskell buffer
             (define-key haskell-interactive-mode-map (kbd "C-c C-z") 'haskell-pack/swich-to-haskell-repl-or-back!)
             (define-key haskell-interactive-mode-map (kbd "C-c C-b") 'haskell-pack/swich-to-haskell-repl-or-back!)))
+
+;; hasktags
+
+(haskell-pack/cabal-install "hasktags")
+
+(custom-set-variables
+'(haskell-tags-on-save t))
 
 (provide 'haskell-pack)
 ;;; haskell-pack.el ends here
