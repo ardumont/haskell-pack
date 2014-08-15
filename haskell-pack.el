@@ -10,7 +10,8 @@
                  haskell-mode
                  ghci-completion
                  flymake-hlint
-                 smartscan))
+                 smartscan
+                 w3m))
 
 (require 'flymake)
 (require 'haskell-mode)
@@ -33,7 +34,9 @@
   (turn-on-ghci-completion)
   ;; Ignore compiled Haskell files in filename completions
   (add-to-list 'completion-ignored-extensions ".hi")
-  (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line))
+  (local-set-key (kbd "C-c d") 'flymake-display-err-menu-for-current-line)
+  (require 'w3m-haddock)
+  (define-key haskell-mode-map (kbd "C-c C-d") 'haskell-w3m-open-haddock))
 
 (add-hook 'haskell-mode-hook 'haskell-pack/mode-defaults)
 
