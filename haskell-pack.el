@@ -48,6 +48,10 @@
 
 ;; Install needed structured-haskell-mode if not already installed
 (haskell-pack/cabal-install "structured-haskell-mode")
+(haskell-pack/cabal-install "stylish-haskell")
+
+;; On save, let stylish format code adequately
+(custom-set-variables '(haskell-stylish-on-save t))
 
 ;; turn-on-haskell-* are not compatible with structured-haskell-mode (shm)
 ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
