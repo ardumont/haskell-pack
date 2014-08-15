@@ -155,12 +155,14 @@ Otherwise, jump back to the latest haskell buffer from whence it came from."
 (add-hook 'interactive-haskell-mode-hook ;; haskell buffer mode
           (lambda ()
             ;; From the haskell buffer, go inside a repl
-            (define-key interactive-haskell-mode-map (kbd "C-c C-z") 'haskell-pack/swich-to-haskell-repl-or-back!)))
+            (define-key interactive-haskell-mode-map (kbd "C-c C-z") 'haskell-pack/swich-to-haskell-repl-or-back!)
+            (define-key interactive-haskell-mode-map (kbd "C-c C-b") 'haskell-pack/swich-to-haskell-repl-or-back!)))
 
 (add-hook 'haskell-interactive-mode-hook ;; repl mode
           (lambda ()
             ;; From the repl, get back to the last haskell buffer
-            (define-key haskell-interactive-mode-map (kbd "C-c C-z") 'haskell-pack/swich-to-haskell-repl-or-back!)))
+            (define-key haskell-interactive-mode-map (kbd "C-c C-z") 'haskell-pack/swich-to-haskell-repl-or-back!)
+            (define-key haskell-interactive-mode-map (kbd "C-c C-b") 'haskell-pack/swich-to-haskell-repl-or-back!)))
 
 (provide 'haskell-pack)
 ;;; haskell-pack.el ends here
