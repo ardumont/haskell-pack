@@ -139,8 +139,7 @@ haskell buffer and the REPL buffer."
 (add-hook 'inferior-haskell-mode-hook ;; inferior-haskell-mode in repl
           (lambda ()
             ;; on inf-haskell, C-c C-z is on comint-stop-subjob
-            (define-key inferior-haskell-mode-map (kbd "C-c C-z") 'haskell-pack/switch-to-last-haskell-buffer)
-            (define-key inferior-haskell-mode-map (kbd "C-j") 'comint-send-input)))
+            (define-key inferior-haskell-mode-map (kbd "C-c C-z") 'haskell-pack/switch-to-last-haskell-buffer)))
 
 (require 'smartscan)
 (add-hook 'haskell-mode-hook (lambda () (smartscan-mode)))
