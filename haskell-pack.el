@@ -19,7 +19,6 @@
 
 (require 'flymake)
 (require 'haskell-mode)
-(require 'inf-haskell)
 (require 'deferred)
 
 ;; utilities
@@ -82,7 +81,6 @@
 
 (require 'flymake-hlint)
 (add-hook 'haskell-mode-hook 'flymake-hlint-load)
-(add-hook 'haskell-mode-hook (lambda () (interactive) (inf-haskell-mode 1)))
 
 ;;;;;;;;;;;;;;;;;;;;; haskell
 
