@@ -81,6 +81,7 @@
 
 (require 'flymake-hlint)
 (add-hook 'haskell-mode-hook 'flymake-hlint-load)
+(haskell-pack/cabal-install "hlint")
 
 ;;;;;;;;;;;;;;;;;;;;; haskell
 
