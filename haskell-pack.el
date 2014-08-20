@@ -31,23 +31,26 @@
   "Determine if PACKAGE is installed on the machine."
   (zerop (shell-command (format "which %s" package))))
 
-(defmacro haskell-pack/cabal-install (package)
-  "Install PACKAGE (if not already installed) through cabal (if cabal is installed)."
-  `(when (and ,(haskell-pack/cabal-installed-p!) (not (haskell-pack/command-installed-p! ,package)))
-     (deferred:$
-       (deferred:process "cabal" "install" ,package)
-       (deferred:nextc it
-         (lambda (x)
-           (message "Package '%s'%s installed!" ,package (if (haskell-pack/command-installed-p! ,package) "" " still not")))))))
+(defun haskell-pack/cabal-install-package (cabal-package)
+  "Install CABAL-PACKAGE (if not already installed) through cabal (if cabal is installed)."
+  (lexical-let ((package cabal-package))
+    (when (and (haskell-pack/cabal-installed-p!) (not (haskell-pack/command-installed-p! package)))
+      (deferred:$
+        (deferred:process "cabal" "install" package)
+        (deferred:nextc it
+          (lambda (x)
+            (message "Package '%s' is%s installed!" package (if (haskell-pack/command-installed-p! package) "" " still not"))))))))
+
+(defun haskell-pack/cabal-install-packages (packages)
+  "Trigger cabal install of PACKAGES."
+  (mapc 'haskell-pack/cabal-install-package packages))
 
 ;; structured-haskell-mode setup
-
 (require 'shm)
 (add-hook 'haskell-mode-hook 'structured-haskell-mode)
 
-;; Install needed structured-haskell-mode if not already installed
-(haskell-pack/cabal-install "structured-haskell-mode")
-(haskell-pack/cabal-install "stylish-haskell")
+;; Install needed cabal packages to be fully compliant with this setup
+(haskell-pack/cabal-install-packages '("structured-haskell-mode" "stylish-haskell" "hasktags"))
 
 ;; On save, let stylish format code adequately
 (custom-set-variables '(haskell-stylish-on-save t))
@@ -116,10 +119,6 @@
  '(haskell-process-suggest-remove-import-lines t)
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t))
-
-;; hasktags
-
-(haskell-pack/cabal-install "hasktags")
 
 (custom-set-variables
 '(haskell-tags-on-save t))
