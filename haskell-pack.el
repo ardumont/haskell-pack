@@ -50,7 +50,10 @@
 (add-hook 'haskell-mode-hook 'structured-haskell-mode)
 
 ;; Install needed cabal packages to be fully compliant with this setup
-(haskell-pack/cabal-install-packages '("structured-haskell-mode" "stylish-haskell" "hasktags"))
+(haskell-pack/cabal-install-packages '("structured-haskell-mode"
+                                       "stylish-haskell"
+                                       "hasktags"
+                                       "hlint"))
 
 ;; On save, let stylish format code adequately
 (custom-set-variables '(haskell-stylish-on-save t))
@@ -84,7 +87,6 @@
 
 (require 'flymake-hlint)
 (add-hook 'haskell-mode-hook 'flymake-hlint-load)
-(haskell-pack/cabal-install "hlint")
 
 ;;;;;;;;;;;;;;;;;;;;; haskell
 
