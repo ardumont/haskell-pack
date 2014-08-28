@@ -120,10 +120,9 @@
 (custom-set-variables
  '(haskell-process-suggest-remove-import-lines t)
  '(haskell-process-auto-import-loaded-modules t)
- '(haskell-process-log t))
-
-(custom-set-variables
-'(haskell-tags-on-save t))
+ '(haskell-process-log t)
+ '(haskell-tags-on-save t)
+ '(haskell-process-type 'cabal-repl))
 
 (provide 'haskell-pack)
 ;;; haskell-pack.el ends here
