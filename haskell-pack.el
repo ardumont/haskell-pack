@@ -7,15 +7,15 @@
 ;; haskell-pack
 
 (require 'install-packages-pack)
-(install-packs '(flymake
-                 flymake-shell
-                 haskell-mode
-                 ghci-completion
-                 flymake-hlint
-                 smartscan
-                 w3m
-                 shm
-                 deferred))
+(install-packages-pack/install-packs '(flymake
+                                       flymake-shell
+                                       haskell-mode
+                                       ghci-completion
+                                       flymake-hlint
+                                       smartscan
+                                       w3m
+                                       shm
+                                       deferred))
 
 (require 'flymake)
 (require 'haskell-mode)
