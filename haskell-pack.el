@@ -124,5 +124,18 @@
  '(haskell-tags-on-save t)
  '(haskell-process-type 'cabal-repl))
 
+;; (custom-set-variables
+;;  '(haskell-process-wrapper-function (lambda (argv) (append (list "nix-shell" "haskell-lab.nix" "--command" )
+;;                                                       (list (shell-quote-argument (mapconcat 'identity argv " "))))))
+;;  '(haskell-process-type cabal-repl))
+
+(custom-set-variables
+ '(haskell-font-lock-symbols 'unicode)
+ ;; '(haskell-process-args-cabal-repl (quote ("--ghc-option=-ferror-spans")))
+ '(haskell-process-wrapper-function (lambda (argv) (append (list "nix-shell" "-I" "." "--command" )
+                                                      (list (mapconcat 'identity argv " ")))))
+ '(haskell-process-type 'cabal-repl)
+ '(haskell-process-log t))
+
 (provide 'haskell-pack)
 ;;; haskell-pack.el ends here
