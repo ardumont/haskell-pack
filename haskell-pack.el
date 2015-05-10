@@ -132,10 +132,17 @@
 (custom-set-variables
  '(haskell-font-lock-symbols 'unicode)
  ;; '(haskell-process-args-cabal-repl (quote ("--ghc-option=-ferror-spans")))
- '(haskell-process-wrapper-function (lambda (argv) (append (list "nix-shell" "-I" "." "--command" )
-                                                      (list (mapconcat 'identity argv " ")))))
+ ;; not all haskell files needs a setup (.xmonad/xmonad.hs for one), use .dir-locals.el for the moment
+ ;; '(haskell-process-wrapper-function (lambda (argv) (append (list "nix-shell" "-I" "." "--command" )
+ ;;                                                      (list (mapconcat 'identity argv " ")))))
  '(haskell-process-type 'cabal-repl)
  '(haskell-process-log t))
+
+;; .dir-locals.el example
+;; ((haskell-mode . ((haskell-process-wrapper-function . (lambda (argv) (append (list "nix-shell" "-I" "." "--command" )
+;;                                                          (list (mapconcat 'identity argv " ")))))
+;;                   (haskell-process-type . cabal-repl))))
+
 
 (provide 'haskell-pack)
 ;;; haskell-pack.el ends here
