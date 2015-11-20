@@ -18,19 +18,19 @@
   "Determine if PACKAGE is installed on the machine."
   (zerop (shell-command (format "export PATH=$PATH:~/.cabal/bin; which %s" package))))
 
-(defun haskell-pack/cabal-install-package (cabal-package)
-  "Install CABAL-PACKAGE (if not already installed) through cabal (if cabal is installed)."
-  (lexical-let ((package cabal-package))
+(defun haskell-pack/install-hs-package (hs-package)
+  "Install HS-PACKAGE if needs be and if possible."
+  (lexical-let ((package hs-package))
     (when (and (haskell-pack/cabal-installed-p!) (not (haskell-pack/command-installed-p! package)))
       (deferred:$
-        (deferred:process "cabal" "install" package)
+        (deferred:process "stack" "install" package)
         (deferred:nextc it
           (lambda (x)
             (message "Package '%s' is%s installed!" package (if (haskell-pack/command-installed-p! package) "" " still not"))))))))
 
-(defun haskell-pack/cabal-install-packages (packages)
+(defun haskell-pack/install-hs-packages (packages)
   "Trigger cabal install of PACKAGES."
-  (mapc 'haskell-pack/cabal-install-package packages))
+  (mapc 'haskell-pack/install-hs-package packages))
 
 (use-package flymake
   :config
@@ -45,11 +45,11 @@
 (use-package w3m)
 
 (use-package flymake-hlint
-  :config (haskell-pack/cabal-install-package "hlint"))
+  :config (haskell-pack/install-hs-package "hlint"))
 
 (use-package shm
   :config
-  (haskell-pack/cabal-install-package "structured-haskell-mode")
+  (haskell-pack/install-hs-package "structured-haskell-mode")
   (add-hook 'structured-haskell-mode-hook (lambda ()
                                             ;; buffer map
                                             (define-key shm-map (kbd "C-i")   'shm/tab)
@@ -65,8 +65,8 @@
 (use-package haskell-mode
   :config
   ;; Install needed cabal packages to be fully compliant with this setup
-  (haskell-pack/cabal-install-packages '("stylish-haskell"
-                                         "hasktags"))
+  (haskell-pack/install-hs-packages '("stylish-haskell"
+                                      "hasktags"))
   (add-hook 'haskell-mode-hook 'structured-haskell-mode)
   ;; On save, let stylish format code adequately
   (custom-set-variables '(haskell-stylish-on-save t))
@@ -105,21 +105,22 @@
    '(haskell-process-auto-import-loaded-modules t)
    '(haskell-process-log t)
    '(haskell-tags-on-save t)
-   '(haskell-process-type 'cabal-repl))
+   '(haskell-process-type 'stack-ghci)
+   ;; '(haskell-font-lock-symbols 'unicode)
+   '(haskell-font-lock-symbols nil))
 
   ;; (custom-set-variables
   ;;  '(haskell-process-wrapper-function (lambda (argv) (append (list "nix-shell" "haskell-lab.nix" "--command" )
   ;;                                                       (list (shell-quote-argument (mapconcat 'identity argv " "))))))
   ;;  '(haskell-process-type cabal-repl))
 
-  (custom-set-variables
-   '(haskell-font-lock-symbols 'unicode)
-   ;; '(haskell-process-args-cabal-repl (quote ("--ghc-option=-ferror-spans")))
-   ;; not all haskell files needs a setup (.xmonad/xmonad.hs for one), use .dir-locals.el for the moment
-   ;; '(haskell-process-wrapper-function (lambda (argv) (append (list "nix-shell" "-I" "." "--command" )
-   ;;                                                      (list (mapconcat 'identity argv " ")))))
-   '(haskell-process-type 'cabal-repl)
-   '(haskell-process-log t))
+  ;; (custom-set-variables
+  ;;  ;; '(haskell-process-args-cabal-repl (quote ("--ghc-option=-ferror-spans")))
+  ;;  ;; not all haskell files needs a setup (.xmonad/xmonad.hs for one), use .dir-locals.el for the moment
+  ;;  ;; '(haskell-process-wrapper-function (lambda (argv) (append (list "nix-shell" "-I" "." "--command" )
+  ;;  ;;                                                      (list (mapconcat 'identity argv " ")))))
+  ;;  '(haskell-process-type 'cabal-repl)
+  ;;  '(haskell-process-log t))
 
   ;; .dir-locals.el example
   ;; ((haskell-mode . ((haskell-process-wrapper-function . (lambda (argv) (append (list "nix-shell" "-I" "." "--command" )
