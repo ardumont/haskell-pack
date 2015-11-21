@@ -44,20 +44,17 @@
 (use-package ghci-completion)
 (use-package w3m)
 
-
 (use-package shm
+  :init
+  (bind-key "C-i"   'shm/tab shm-map)
+  (bind-key "C-M-i" 'shm/backtab shm-map)
+  (bind-key "C-m"   'shm/simple-indent-newline-same-col shm-map)
+  (bind-key "C-M-m" 'shm/simple-indent-newline-indent shm-map)
+  (bind-key "C-h"   'shm/del shm-map)
+  (bind-key "C-S-h" 'shm/delete shm-map)
+  (bind-key "C-M-h" 'shm/backward-kill-word shm-map)
   :config
-  (haskell-pack/install-hs-package "structured-haskell-mode")
-  (add-hook 'structured-haskell-mode-hook
-            (lambda ()
-              ;; buffer map
-              (define-key shm-map (kbd "C-i")   'shm/tab)
-              (define-key shm-map (kbd "C-M-i") 'shm/backtab)
-              (define-key shm-map (kbd "C-m")   'shm/simple-indent-newline-same-col)
-              (define-key shm-map (kbd "C-M-m") 'shm/simple-indent-newline-indent)
-              (define-key shm-map (kbd "C-h")   'shm/del)
-              (define-key shm-map (kbd "C-S-h") 'shm/delete)
-              (define-key shm-map (kbd "C-M-h") 'shm/backward-kill-word))))
+  (haskell-pack/install-hs-package "structured-haskell-mode"))
 
 (use-package smartscan)
 
