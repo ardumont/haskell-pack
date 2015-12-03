@@ -10,18 +10,18 @@
 
 ;; utilities
 
-(defun haskell-pack/cabal-installed-p! ()
-  "Determine if cabal is installed on the machine or not."
-  (haskell-pack/command-installed-p! "cabal"))
-
 (defun haskell-pack/command-installed-p! (package)
   "Determine if PACKAGE is installed on the machine."
-  (zerop (shell-command (format "export PATH=$PATH:~/.cabal/bin; which %s" package))))
+  (zerop (shell-command (format "export PATH=~/.local/bin/:$PATH; which %s" package))))
+
+(defun haskell-pack/cabal-installed-p! ()
+  "Determine if cabal is installed on the machine or not."
+  (haskell-pack/command-installed-p! "stack"))
 
 (defun haskell-pack/install-hs-package (hs-package)
   "Install HS-PACKAGE if needs be and if possible."
   (lexical-let ((package hs-package))
-    (when (and (haskell-pack/cabal-installed-p!) (not (haskell-pack/command-installed-p! package)))
+    (when (and (haskell-pack/cabal-installed-p!) (not (haskell-pack/command-installed-p! hs-package)))
       (deferred:$
         (deferred:process "stack" "install" package)
         (deferred:nextc it
