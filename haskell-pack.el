@@ -45,7 +45,7 @@
 (use-package w3m)
 
 (use-package shm
-  :init
+  :config
   (bind-key "C-i"   'shm/tab shm-map)
   (bind-key "C-M-i" 'shm/backtab shm-map)
   (bind-key "C-m"   'shm/simple-indent-newline-same-col shm-map)
@@ -53,7 +53,6 @@
   (bind-key "C-h"   'shm/del shm-map)
   (bind-key "C-S-h" 'shm/delete shm-map)
   (bind-key "C-M-h" 'shm/backward-kill-word shm-map)
-  :config
   (haskell-pack/install-hs-package "structured-haskell-mode"))
 
 (use-package smartscan)
@@ -64,13 +63,10 @@
   :config (haskell-pack/install-hs-package "hlint"))
 
 (use-package haskell-mode
-  :init
+  :config
   (bind-key "C-c , C-f" 'haskell-w3m-open-haddock haskell-mode-map)
   (bind-key "C-c , C-f" 'flymake-popup-current-error-menu haskell-mode-map)
-  :config
-  ;; Install needed cabal packages to be fully compliant with this setup
-  (haskell-pack/install-hs-packages '("stylish-haskell"
-                                      "hasktags"))
+  ;; install hooks
   (add-hook 'haskell-mode-hook (lambda () (structured-haskell-mode 1)))
   ;; On save, let stylish format code adequately
   (custom-set-variables '(haskell-stylish-on-save t))
@@ -109,7 +105,11 @@
    '(haskell-tags-on-save t)
    '(haskell-process-type 'stack-ghci)
    ;; '(haskell-font-lock-symbols 'unicode)
-   '(haskell-font-lock-symbols nil)))
+   '(haskell-font-lock-symbols nil))
+
+  ;; Install needed cabal packages to be fully compliant with this setup
+  (haskell-pack/install-hs-packages '("stylish-haskell"
+                                      "hasktags")))
 
 (provide 'haskell-pack)
 ;;; haskell-pack.el ends here
