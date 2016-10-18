@@ -12,7 +12,7 @@
 
 (defun haskell-pack/command-installed-p! (package)
   "Determine if PACKAGE is installed on the machine."
-  (zerop (shell-command (format "export PATH=~/.local/bin/:$PATH; which %s" package))))
+  (zerop (shell-command (format "export PATH=~/.local/bin:$PATH; which %s" package))))
 
 (defun haskell-pack/cabal-installed-p! ()
   "Determine if cabal is installed on the machine or not."
