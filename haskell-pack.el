@@ -109,7 +109,7 @@
 
 ;; Install needed cabal packages to be fully compliant with this setup
 (haskell-pack/install-hs-packages '("stylish-haskell"
-				    "hasktags")))
+				    "hasktags"))
 
 (provide 'haskell-pack)
 ;;; haskell-pack.el ends here
