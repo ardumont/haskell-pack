@@ -6,7 +6,7 @@
 
 ;; haskell-pack
 
-(use-package deferred)
+(require 'deferred)
 
 ;; utilities
 
@@ -32,84 +32,82 @@
   "Trigger cabal install of PACKAGES."
   (mapc 'haskell-pack/install-hs-package packages))
 
-(use-package flymake
-  :config
-  ;; Forces flymake to underline bad lines, instead of fully
-  ;; highlighting them;
-  (custom-set-faces
-   '(flymake-errline ((((class color)) (:underline "red"))))
-   '(flymake-warnline ((((class color)) (:underline "yellow"))))))
+(require 'flymake)
+;; Forces flymake to underline bad lines, instead of fully
+;; highlighting them;
+(custom-set-faces
+ '(flymake-errline ((((class color)) (:underline "red"))))
+ '(flymake-warnline ((((class color)) (:underline "yellow")))))
 
-(use-package flymake-shell)
-(use-package ghci-completion)
-(use-package w3m)
+(require 'flymake-shell)
+(require 'ghci-completion)
+(require 'w3m)
 
-(use-package shm
-  :config
-  (bind-key "C-i"   'shm/tab shm-map)
-  (bind-key "C-M-i" 'shm/backtab shm-map)
-  (bind-key "C-m"   'shm/simple-indent-newline-same-col shm-map)
-  (bind-key "C-M-m" 'shm/simple-indent-newline-indent shm-map)
-  (bind-key "C-h"   'shm/del shm-map)
-  (bind-key "C-S-h" 'shm/delete shm-map)
-  (bind-key "C-M-h" 'shm/backward-kill-word shm-map)
-  (haskell-pack/install-hs-package "structured-haskell-mode"))
+(require 'shm)
+(bind-key "C-i"   'shm/tab shm-map)
+(bind-key "C-M-i" 'shm/backtab shm-map)
+(bind-key "C-m"   'shm/simple-indent-newline-same-col shm-map)
+(bind-key "C-M-m" 'shm/simple-indent-newline-indent shm-map)
+(bind-key "C-h"   'shm/del shm-map)
+(bind-key "C-S-h" 'shm/delete shm-map)
+(bind-key "C-M-h" 'shm/backward-kill-word shm-map)
+(haskell-pack/install-hs-package "structured-haskell-mode")
 
-(use-package smartscan)
+(require 'smartscan)
 
-(use-package w3m-haddock)
+(require 'w3m-haddock)
 
-(use-package flymake-hlint
-  :config (haskell-pack/install-hs-package "hlint"))
+(require 'flymake-hlint)
+(haskell-pack/install-hs-package "hlint")
 
-(use-package haskell-mode
-  :config
-  (bind-key "C-c , C-f" 'haskell-w3m-open-haddock haskell-mode-map)
-  (bind-key "C-c , C-f" 'flymake-popup-current-error-menu haskell-mode-map)
-  ;; install hooks
-  (add-hook 'haskell-mode-hook (lambda () (structured-haskell-mode 1)))
-  ;; On save, let stylish format code adequately
-  (custom-set-variables '(haskell-stylish-on-save t))
+(require 'haskell-mode)
 
-  ;; turn-on-haskell-* are not compatible with structured-haskell-mode (shm)
-  ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
-  ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
-  ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
+(bind-key "C-c , C-f" 'haskell-w3m-open-haddock haskell-mode-map)
+(bind-key "C-c , C-f" 'flymake-popup-current-error-menu haskell-mode-map)
+;; install hooks
+(add-hook 'haskell-mode-hook (lambda () (structured-haskell-mode 1)))
+;; On save, let stylish format code adequately
+(custom-set-variables '(haskell-stylish-on-save t))
 
-  ;; trying out the default font color for the moment
-  ;; (set-face-background 'shm-current-face "#373737")
-  ;; (set-face-background 'shm-quarantine-face "#443333")
+;; turn-on-haskell-* are not compatible with structured-haskell-mode (shm)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indent)
+;; (add-hook 'haskell-mode-hook 'turn-on-haskell-indentation)
 
-  (add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
-  ;; compilation on the fly setup
-  (add-hook 'haskell-mode-hook 'flymake-hlint-load)
-  (add-hook 'haskell-mode-hook
-            (lambda ()
-              "Activate default haskell modes."
-              (subword-mode +1)
-              (turn-on-haskell-doc-mode)
-              (turn-on-ghci-completion)
-              ;; Ignore compiled Haskell files in filename completions
-              (add-to-list 'completion-ignored-extensions ".hi")))
-  (add-hook 'haskell-mode-hook 'smartscan-mode)
+;; trying out the default font color for the moment
+;; (set-face-background 'shm-current-face "#373737")
+;; (set-face-background 'shm-quarantine-face "#443333")
 
-  ;; Main mode
+(add-hook 'haskell-mode-hook 'haskell-auto-insert-module-template)
+;; compilation on the fly setup
+(add-hook 'haskell-mode-hook 'flymake-hlint-load)
+(add-hook 'haskell-mode-hook
+	  (lambda ()
+	    "Activate default haskell modes."
+	    (subword-mode +1)
+	    (turn-on-haskell-doc-mode)
+	    (turn-on-ghci-completion)
+	    ;; Ignore compiled Haskell files in filename completions
+	    (add-to-list 'completion-ignored-extensions ".hi")))
+(add-hook 'haskell-mode-hook 'smartscan-mode)
 
-  ;; interactive-haskell-mode is the mode! (inferior-haskell is deprecated)
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+;; Main mode
 
-  (custom-set-variables
-   '(haskell-process-suggest-remove-import-lines t)
-   '(haskell-process-auto-import-loaded-modules t)
-   '(haskell-process-log t)
-   '(haskell-tags-on-save t)
-   '(haskell-process-type 'stack-ghci)
-   ;; '(haskell-font-lock-symbols 'unicode)
-   '(haskell-font-lock-symbols nil))
+;; interactive-haskell-mode is the mode! (inferior-haskell is deprecated)
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
-  ;; Install needed cabal packages to be fully compliant with this setup
-  (haskell-pack/install-hs-packages '("stylish-haskell"
-                                      "hasktags")))
+(custom-set-variables
+ '(haskell-process-suggest-remove-import-lines t)
+ '(haskell-process-auto-import-loaded-modules t)
+ '(haskell-process-log t)
+ '(haskell-tags-on-save t)
+ '(haskell-process-type 'stack-ghci)
+ ;; '(haskell-font-lock-symbols 'unicode)
+ '(haskell-font-lock-symbols nil))
+
+;; Install needed cabal packages to be fully compliant with this setup
+(haskell-pack/install-hs-packages '("stylish-haskell"
+				    "hasktags")))
 
 (provide 'haskell-pack)
 ;;; haskell-pack.el ends here
