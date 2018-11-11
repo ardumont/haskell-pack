@@ -54,8 +54,6 @@
 
 (haskell-pack/install-hs-package "structured-haskell-mode")
 
-(require 'smartscan)
-
 (require 'w3m-haddock)
 
 (require 'flymake-hlint)
@@ -89,7 +87,6 @@
 	    (turn-on-ghci-completion)
 	    ;; Ignore compiled Haskell files in filename completions
 	    (add-to-list 'completion-ignored-extensions ".hi")))
-(add-hook 'haskell-mode-hook 'smartscan-mode)
 
 ;; Main mode
 
