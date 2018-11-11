@@ -68,8 +68,6 @@
 
 ;; install hooks
 (add-hook 'haskell-mode-hook (lambda () (structured-haskell-mode 1)))
-;; On save, let stylish format code adequately
-(custom-set-variables '(haskell-stylish-on-save t))
 
 ;; turn-on-haskell-* are not compatible with structured-haskell-mode (shm)
 ;; (add-hook 'haskell-mode-hook 'turn-on-haskell-simple-indent)
@@ -99,6 +97,7 @@
 (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
 
 (custom-set-variables
+ '(haskell-stylish-on-save t) ;; On save, let stylish format code adequately
  '(haskell-process-suggest-remove-import-lines t)
  '(haskell-process-auto-import-loaded-modules t)
  '(haskell-process-log t)
