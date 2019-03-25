@@ -58,7 +58,6 @@
 
 (require 'flymake-shell)
 (require 'ghci-completion)
-(require 'w3m)
 
 (require 'shm)
 (define-key shm-map (kbd "C-i") 'shm/tab)
@@ -71,14 +70,11 @@
 
 (haskell-pack/install-hs-package "structured-haskell-mode")
 
-(require 'w3m-haddock)
-
 (require 'flymake-hlint)
 (haskell-pack/install-hs-package "hlint")
 
 (require 'haskell-mode)
 
-(define-key haskell-mode-map (kbd "C-c , C-f") 'haskell-w3m-open-haddock)
 (define-key haskell-mode-map (kbd "C-c , C-f") 'flymake-popup-current-error-menu)
 
 ;; install hooks
